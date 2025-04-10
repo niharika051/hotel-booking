@@ -15,24 +15,18 @@
 
     header {
       background: rgba(0, 0, 0, 0.6);
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 20px 0;
+      text-align: center;
       box-shadow: 0 4px 8px rgba(0,0,0,0.4);
     }
 
     header h1 {
-      font-size: 2em;
+      font-size: 3em;
       margin: 0;
-      text-shadow: 2px 2px 6px #000;
-    }
-
-    nav a {
+      font-family: 'Georgia', serif;
+      letter-spacing: 1px;
+      text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
       color: #fbc531;
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: bold;
     }
 
     .container {
@@ -159,11 +153,6 @@
 <body>
   <header>
     <h1>🏝️ Grand Luxe Beach</h1>
-    <nav>
-      <a href="#rooms">Rooms</a>
-      <a href="#booking">Booking</a>
-      <a href="#cancellation">Cancellation</a>
-    </nav>
   </header>
 
   <div class="container">
@@ -275,7 +264,30 @@
         <strong>Total Payable:</strong> ₹${grandTotal.toFixed(2)}
         <div class="thank-you">Thank you for choosing Grand Luxe Beach!</div>
       `;
-    }
+    }  
+
+    // Replace with your actual Web App URL
+const scriptURL = 'https://script.google.com/macros/s/YOUR_Shttps://script.google.com/macros/s/AKfycbwOYL7vywNjUI1Jc0cNDKRJjStAp9tk_fP4BL0pfDxqapJyv59Lc-B04UMpdoFXyBEdfg/execCRIPT_ID/exec';
+
+fetch(scriptURL, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: username,
+    roomType: roomType,
+    nights: nights,
+    breakfast: breakfast,
+    amenities: selectedAmenities.join(', '),
+    subtotal: total,
+    gst: gst.toFixed(2),
+    total: grandTotal.toFixed(2)
+  })
+})
+.then(response => console.log('Booking data saved to sheet!'))
+.catch(error => console.error('Error!', error.message));
+
 
     function cancelBooking() {
       if (confirm("Are you sure you want to cancel the booking?")) {
