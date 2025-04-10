@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grand Luxe Hotel Booking</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+    input, select {
+      background: #f4f4f4;
+    }
+    button {
+      background-color: #e1b12c;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .result {
+      background: #dff9fb;
+      color: #000;
+      padding: 15px;
+      margin-top: 20px;
+      border-left: 5px solid green;
+      border-radius: 5px;
+    }
+    .hotel-image {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" class="hotel-image" alt="Hotel Image">
+    <h1>Grand Luxe Hotel Booking</h1>
+
+    <label for="username">Full Name:</label>
+    <input type="text" id="username" placeholder="Enter your full name" />
+
+    <label for="roomType">Room Type:</label>
+    <select id="roomType">
+      <option value="Single">Single - ₹8000/night</option>
+      <option value="Double">Double - ₹12000/night</option>
+      <option value="Deluxe">Deluxe - ₹16000/night</option>
+      <option value="Suite">Suite - ₹24000/night</option>
+    </select>
+
+    <label for="nights">Number of Nights:</label>
+    <input type="number" id="nights" value="1" min="1" />
+
+    <label for="breakfast">Include Breakfast?</label>
+    <select id="breakfast">
+      <option value="Yes">Yes (+₹1500/night)</option>
+      <option value="No">No</option>
+    </select>
+
+    <label for="amenities">Select Amenities:</label>
+    <select id="amenities" multiple>
+      <option value="Spa">Spa - ₹2000</option>
+      <option value="Airport Pickup">Airport Pickup - ₹1000</option>
+      <option value="Gym Access">Gym Access - ₹500</option>
+      <option value="Swimming Pool">Swimming Pool - ₹700</option>
+    </select>
+
+    <button onclick="
+      const username = document.getElementById('username').value;
+      const roomType = document.getElementById('roomType').value;
+      const nights = parseInt(document.getElementById('nights').value);
+      const breakfast = document.getElementById('breakfast').value;
+      const amenitiesSelect = document.getElementById('amenities');
+      const selectedAmenities = Array.from(amenitiesSelect.selectedOptions).map(option => option.value);
+      const rates = { 'Single': 8000, 'Double': 12000, 'Deluxe': 16000, 'Suite': 24000 };
+      const amenityPrices = { 'Spa': 2000, 'Airport Pickup': 1000, 'Gym Access': 500, 'Swimming Pool': 700 };
+
+      if (!username) {
+        alert('Please enter your full name.');
+        return;
+      }
+
+      let baseCost = rates[roomType] * nights;
+      let breakfastCost = (breakfast === 'Yes') ? 1500 * nights : 0;
+      let amenitiesCost = selectedAmenities.reduce((sum, item) => sum + amenityPrices[item], 0);
+      let total = baseCost + breakfastCost + amenitiesCost;
+      let gst = total * 0.12;
+      let grandTotal = total + gst;
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `
+        <h3>🧾 Booking Invoice</h3>
+        <strong>Name:</strong> ${username}<br>
+        <strong>Room Type:</strong> ${roomType} (₹${rates[roomType]} x ${nights})<br>
+        <strong>Breakfast:</strong> ${breakfast} ${breakfast === 'Yes' ? `(₹1500 x ${nights})` : ''}<br>
+        <strong>Amenities:</strong> ${selectedAmenities.join(', ') || 'None'}<br>
+        <strong>Amenities Cost:</strong> ₹${amenitiesCost}<br>
+        <strong>Subtotal:</strong> ₹${total}<br>
+        <strong>GST (12%):</strong> ₹${gst.toFixed(2)}<br>
+        <strong>Total Payable:</strong> ₹${grandTotal.toFixed(2)}
+      `;
+    ">Book Now</button>
+
+    <div class="result" id="result" style="display:none;"></div>
+  </div>
+</body>
+</html>
