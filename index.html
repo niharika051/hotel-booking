@@ -3,78 +3,200 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grand Luxe Hotel Booking</title>
+  <title>Grand Luxe Beach Booking</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #fff;
       margin: 0;
-      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
     }
-    h1 {
+
+    header {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+
+    header h1 {
+      font-size: 2em;
+      margin: 0;
+      text-shadow: 2px 2px 6px #000;
+    }
+
+    nav a {
+      color: #fbc531;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      background: rgba(0, 0, 0, 0.75);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    }
+
+    h2 {
       text-align: center;
       font-size: 2.5em;
-      margin-bottom: 10px;
+      margin-bottom: 25px;
+      text-shadow: 1px 1px 4px #000;
     }
-    .container {
-      max-width: 700px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    }
+
     label {
       display: block;
-      margin: 10px 0 5px;
+      margin: 15px 0 5px;
+      font-weight: bold;
     }
+
     input, select, button {
       width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
+      padding: 12px;
+      border-radius: 8px;
       margin-top: 5px;
+      border: none;
+      font-size: 1em;
     }
+
     input, select {
-      background: #f4f4f4;
+      background: #fff;
+      color: #000;
     }
+
     button {
-      background-color: #e1b12c;
+      background-color: #fbc531;
       color: #000;
       font-weight: bold;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #e1a70a;
+    }
+
+    .cancel-btn {
+      background-color: #ff4d4d;
+    }
+
+    .cancel-btn:hover {
+      background-color: #e84118;
+    }
+
+    .room-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .room {
+      border: 2px solid transparent;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s, border 0.3s;
       cursor: pointer;
     }
-    .result {
-      background: #dff9fb;
-      color: #000;
-      padding: 15px;
-      margin-top: 20px;
-      border-left: 5px solid green;
-      border-radius: 5px;
-    }
-    .hotel-image {
+
+    .room img {
       width: 100%;
-      height: auto;
-      border-radius: 10px;
-      margin-bottom: 20px;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .room p {
+      background: #fff;
+      color: #000;
+      margin: 0;
+      padding: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .room.selected {
+      border: 3px solid #fbc531;
+      transform: scale(1.03);
+    }
+
+    .result {
+      background: #fefefe;
+      color: #000;
+      padding: 20px;
+      margin-top: 25px;
+      border-left: 6px solid green;
+      border-radius: 8px;
+    }
+
+    .thank-you {
+      font-style: italic;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .cancellation {
+      margin-top: 30px;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-left: 5px solid #fbc531;
+      border-radius: 8px;
+    }
+
+    .cancellation h3 {
+      margin-top: 0;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>🏝️ Grand Luxe Beach</h1>
+    <nav>
+      <a href="#rooms">Rooms</a>
+      <a href="#booking">Booking</a>
+      <a href="#cancellation">Cancellation</a>
+    </nav>
+  </header>
+
   <div class="container">
-    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" class="hotel-image" alt="Hotel Image">
-    <h1>Grand Luxe Hotel Booking</h1>
+    <h2 id="rooms">Choose Your Beach Room</h2>
+
+    <div class="room-gallery">
+      <div class="room" onclick="selectRoom('Beach Hut', this)">
+        <img src="https://www.businessdestinations.com/wp-content/uploads/2014/02/Labadi-Beach-Hotel.jpg" />
+        <p>Beach Hut - ₹6000/night</p>
+      </div>
+      <div class="room" onclick="selectRoom('Ocean View', this)">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv4-QNeXktkrYTS_mrlph2PT060O3jI2jZPSdosYwb51d9mc7u_AlMu4mtl3TVxf99BMI&usqp=CAU" />
+        <p>Ocean View - ₹9500/night</p>
+      </div>
+      <div class="room" onclick="selectRoom('Luxury Cabana', this)">
+        <img src="https://specials-images.forbesimg.com/imageserve/648efefb42d199f412214425/6-18-2023-5-55-58-AM/960x0.jpg?fit=scale" />
+        <p>Luxury Cabana - ₹14000/night</p>
+      </div>
+      <div class="room" onclick="selectRoom('Private Villa', this)">
+        <img src="https://www.shutterstock.com/image-photo/this-photo-taken-somewhere-miami-260nw-2341437271.jpg" />
+        <p>Private Villa - ₹22000/night</p>
+      </div>
+    </div>
 
     <label for="username">Full Name:</label>
     <input type="text" id="username" placeholder="Enter your full name" />
 
     <label for="roomType">Room Type:</label>
     <select id="roomType">
-      <option value="Single">Single - ₹8000/night</option>
-      <option value="Double">Double - ₹12000/night</option>
-      <option value="Deluxe">Deluxe - ₹16000/night</option>
-      <option value="Suite">Suite - ₹24000/night</option>
+      <option value="Beach Hut">Beach Hut - ₹6000/night</option>
+      <option value="Ocean View">Ocean View - ₹9500/night</option>
+      <option value="Luxury Cabana">Luxury Cabana - ₹14000/night</option>
+      <option value="Private Villa">Private Villa - ₹22000/night</option>
     </select>
 
     <label for="nights">Number of Nights:</label>
@@ -90,19 +212,42 @@
     <select id="amenities" multiple>
       <option value="Spa">Spa - ₹2000</option>
       <option value="Airport Pickup">Airport Pickup - ₹1000</option>
-      <option value="Gym Access">Gym Access - ₹500</option>
-      <option value="Swimming Pool">Swimming Pool - ₹700</option>
+      <option value="Yoga Classes">Yoga Classes - ₹800</option>
+      <option value="Snorkeling">Snorkeling - ₹1200</option>
     </select>
 
-    <button onclick="
+    <button onclick="bookNow()">Book Now</button>
+    <button class="cancel-btn" onclick="cancelBooking()">Cancel Booking</button>
+
+    <div class="result" id="result" style="display:none;"></div>
+
+    <div class="cancellation" id="cancellation">
+      <h3>📄 Cancellation Policy</h3>
+      <ul>
+        <li>Free cancellation within 24 hours of booking.</li>
+        <li>50% refund if cancelled 7 days before check-in.</li>
+        <li>No refund for cancellations within 48 hours of check-in.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    let selectedRoom = null;
+    function selectRoom(roomType, element) {
+      document.getElementById('roomType').value = roomType;
+      document.querySelectorAll('.room').forEach(room => room.classList.remove('selected'));
+      element.classList.add('selected');
+    }
+
+    function bookNow() {
       const username = document.getElementById('username').value;
       const roomType = document.getElementById('roomType').value;
       const nights = parseInt(document.getElementById('nights').value);
       const breakfast = document.getElementById('breakfast').value;
       const amenitiesSelect = document.getElementById('amenities');
       const selectedAmenities = Array.from(amenitiesSelect.selectedOptions).map(option => option.value);
-      const rates = { 'Single': 8000, 'Double': 12000, 'Deluxe': 16000, 'Suite': 24000 };
-      const amenityPrices = { 'Spa': 2000, 'Airport Pickup': 1000, 'Gym Access': 500, 'Swimming Pool': 700 };
+      const rates = { 'Beach Hut': 6000, 'Ocean View': 9500, 'Luxury Cabana': 14000, 'Private Villa': 22000 };
+      const amenityPrices = { 'Spa': 2000, 'Airport Pickup': 1000, 'Yoga Classes': 800, 'Snorkeling': 1200 };
 
       if (!username) {
         alert('Please enter your full name.');
@@ -128,10 +273,21 @@
         <strong>Subtotal:</strong> ₹${total}<br>
         <strong>GST (12%):</strong> ₹${gst.toFixed(2)}<br>
         <strong>Total Payable:</strong> ₹${grandTotal.toFixed(2)}
+        <div class="thank-you">Thank you for choosing Grand Luxe Beach!</div>
       `;
-    ">Book Now</button>
+    }
 
-    <div class="result" id="result" style="display:none;"></div>
-  </div>
+    function cancelBooking() {
+      if (confirm("Are you sure you want to cancel the booking?")) {
+        document.getElementById('username').value = '';
+        document.getElementById('roomType').value = 'Beach Hut';
+        document.getElementById('nights').value = 1;
+        document.getElementById('breakfast').value = 'Yes';
+        document.getElementById('amenities').selectedIndex = -1;
+        document.getElementById('result').style.display = 'none';
+        document.querySelectorAll('.room').forEach(room => room.classList.remove('selected'));
+      }
+    }
+  </script>
 </body>
 </html>
