@@ -156,7 +156,7 @@
   </header>
 
   <div class="container">
-    <h2 id="rooms">Choose Your Beach Room</h2>
+    <h2>Choose Your Beach Room</h2>
 
     <div class="room-gallery">
       <div class="room" onclick="selectRoom('Beach Hut', this)">
@@ -210,7 +210,7 @@
 
     <div class="result" id="result" style="display:none;"></div>
 
-    <div class="cancellation" id="cancellation">
+    <div class="cancellation">
       <h3>📄 Cancellation Policy</h3>
       <ul>
         <li>Free cancellation within 24 hours of booking.</li>
@@ -264,30 +264,27 @@
         <strong>Total Payable:</strong> ₹${grandTotal.toFixed(2)}
         <div class="thank-you">Thank you for choosing Grand Luxe Beach!</div>
       `;
-    }  
 
-    // Replace with your actual Web App URL
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwYS1la-ped_jRjGN1LNDo7KhmeOtdgZbbBtF7FTce5APaPtPH51Syc8c11A2gXpVyn/exec';
-
-fetch(scriptURL, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    name: username,
-    roomType: roomType,
-    nights: nights,
-    breakfast: breakfast,
-    amenities: selectedAmenities.join(', '),
-    subtotal: total,
-    gst: gst.toFixed(2),
-    total: grandTotal.toFixed(2)
-  })
-})
-.then(response => console.log('Booking data saved to sheet!'))
-.catch(error => console.error('Error!', error.message));
-
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyyqoa0C-vuhTeKRiha0b4N08gDkZ_6UA2_hvgJCHYcTr1nZZ1lphJThHxAlIqT8X0sTQ/exec';
+      fetch(scriptURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: username,
+          roomType: roomType,
+          nights: nights,
+          breakfast: breakfast,
+          amenities: selectedAmenities.join(', '),
+          subtotal: total,
+          gst: gst.toFixed(2),
+          total: grandTotal.toFixed(2)
+        })
+      })
+      .then(response => console.log('Booking data saved to sheet!'))
+      .catch(error => console.error('Error!', error.message));
+    }
 
     function cancelBooking() {
       if (confirm("Are you sure you want to cancel the booking?")) {
